@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Vista de Lista -->
+        <record id="view_exchange_rate_api_list" model="ir.ui.view">
+            <field name="name">exchange.rate.api.list</field>
+            <field name="model">exchange.rate.api</field>
+            <field name="arch" type="xml">
+                <list string="Configuraciones de API">
+                    <field name="name"/>
+                    <field name="base_url"/>
+                    <field name="last_call"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vista de Formulario -->
+        <record id="view_exchange_rate_api_form" model="ir.ui.view">
+            <field name="name">exchange.rate.api.form</field>
+            <field name="model">exchange.rate.api</field>
+            <field name="arch" type="xml">
+                <form string="Configuración de API">
+                    <header>
+                        <button name="action_test_api_connection" 
+                                string="Probar Conexión" 
+                                type="object" 
+                                class="btn-primary"
+                                help="Probar la conexión a la API con la configuración actual"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre de la configuración..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group name="api_config">
+                                <field name="base_url" placeholder="https://api.ejemplo.com/tipo-cambio"/>
+                                <field name="api_key" password="True" placeholder="Token de autenticación"/>
+                                <field name="active"/>
+                            </group>
+                            <group name="api_status">
+                                <field name="last_call" readonly="1"/>
+                                <field name="company_id" />
+                                <field name="target_currency_id" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Última Respuesta" name="last_response">
+                                <field name="last_response" 
+                                       widget="text" 
+                                       placeholder="Aquí aparecerá la respuesta de la última llamada a la API..."/>
+                            </page>
+                            <page string="Información" name="info">
+                                <div class="alert alert-info" role="alert">
+                                    <h4>Información sobre el módulo:</h4>
+                                    <ul>
+                                        <li><strong>Propósito:</strong> Obtener tipo de cambio (Moneda de la Empresa)→USD desde una API externa</li>
+                                        <li><strong>Frecuencia:</strong> Diariamente a las 1:00 AM (hora Perú, UTC-5)</li>
+                                        <li><strong>Autenticación:</strong> Bearer Token</li>
+                                        <li><strong>Timeout:</strong> 30 segundos por llamada</li>
+                                    </ul>
+                                    <p><strong>Nota:</strong> Use el botón "Probar Conexión" para verificar que la API responde correctamente antes de activar la configuración.</p>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción de Ventana -->
+        <record id="action_exchange_rate_api" model="ir.actions.act_window">
+            <field name="name">Configuración API Tipo de Cambio</field>
+            <field name="res_model">exchange.rate.api</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    ¡Crea tu primera configuración de API!
+                </p>
+                <p>
+                    Configure la URL y credenciales de la API externa para obtener
+                    el tipo de cambio USD→PEN automáticamente todos los días.
+                </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_exchange_rate_api"
+                  name="Tasas de Cambio Automática API"
+                  parent="base.menu_automation"
+                  action="action_exchange_rate_api"
+                  groups="base.group_system"
+                  sequence="50"/>
+
+    </data>
+</odoo>

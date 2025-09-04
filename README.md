@@ -13,9 +13,9 @@ Módulo de Odoo 18 para la obtención automática de tipos de cambio PEN→USD d
 
 ## Configuración
 
-1. Ir a `Configuración > Exchange Rate API`
+1. Ir a `Ajustes > Técnico > Acciones Automatizadas > Exchange Rate API`
 2. Completar los campos:
-   - **URL de la API**: `https://api.decolecta.com/sunat/exchange-rate`
+   - **URL de la API**: `https://api.decolecta.com/v1/tipo-cambio/sunat`
    - **Bearer Token**: Tu token de decolecta.com
    - **Moneda Base**: PEN
    - **Moneda Destino**: USD
